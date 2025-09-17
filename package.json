@@ -10,9 +10,7 @@
     "dev": "turbo run dev",
     "build": "turbo run build",
     "start": "turbo run start",
-    "lint": "turbo run lint",
-    "test": "turbo run test",
-    "clean": "turbo run clean"
+    "lint": "turbo run lint"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
@@ -23,9 +21,5 @@
     "turbo": "^1.11.3",
     "typescript": "^5.3.3",
     "tsx": "^4.7.0"
-  },
-  "engines": {
-    "node": ">=18.0.0",
-    "npm": ">=9.0.0"
   }
 }
