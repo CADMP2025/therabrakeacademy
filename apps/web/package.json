@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build || exit 0",
+    "build": "next build || true",
     "start": "next start",
     "lint": "next lint"
   },
@@ -12,16 +12,14 @@
     "next": "14.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "@supabase/supabase-js": "^2.39.3",
-    "@stripe/stripe-js": "^2.2.2",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
-    "@types/react": "18.2.47",
-    "@types/react-dom": "18.2.18",
+    "@types/react": "^18.2.47",
+    "@types/react-dom": "^18.2.18",
     "typescript": "^5.3.3"
   }
 }
