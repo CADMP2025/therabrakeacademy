@@ -12,12 +12,7 @@
     "start": "turbo run start",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "clean": "turbo run clean",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:migrate": "cd supabase && supabase migration up",
-    "db:reset": "cd supabase && supabase db reset",
-    "db:seed": "tsx scripts/seed-data.ts",
-    "setup": "npm install && npm run db:migrate && npm run db:seed"
+    "clean": "turbo run clean"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
@@ -32,5 +27,5 @@
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
-  },
+  }
 }
