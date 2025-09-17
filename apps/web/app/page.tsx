@@ -8,16 +8,19 @@ export default function Home() {
       <nav className="bg-[#3B82F6] text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-20">
-            {/* Logo Section */}
+            {/* Logo Section with Text */}
             <Link href="/" className="flex items-center space-x-3">
               <Image 
                 src="/assets/images/logo.svg" 
                 alt="TheraBrake Academy" 
-                width={180} 
+                width={60} 
                 height={60}
-                className="h-14 w-auto"
+                className="h-14 w-14"
                 priority
               />
+              <span className="text-2xl font-bold">
+                Therabrake Academy™
+              </span>
             </Link>
             
             {/* Navigation Links */}

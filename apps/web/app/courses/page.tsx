@@ -1,3 +1,6 @@
+import Link from 'next/link'
+import Image from 'next/image'
+
 export default function CoursesPage() {
   const courses = [
     { 
@@ -158,44 +161,76 @@ export default function CoursesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex justify-between items-center">
-            <div>
-              <a href="/" className="text-3xl font-bold flex items-center gap-2">
-                <span className="text-4xl">🧠</span>
-                Therabrake Academy
-              </a>
-              <p className="text-blue-100 mt-1">Pause. Process. Progress.</p>
-            </div>
-            <nav className="flex items-center space-x-8">
-              <a href="/" className="hover:text-blue-200 transition">Home</a>
-              <a href="/courses" className="hover:text-blue-200 font-semibold border-b-2 border-white pb-1">Courses</a>
-              <a href="/about" className="hover:text-blue-200 transition">About</a>
-              <a href="/contact" className="hover:text-blue-200 transition">Contact</a>
-              <button className="bg-orange-500 hover:bg-orange-600 px-6 py-2 rounded-lg font-semibold transition">
+    <main className="min-h-screen">
+      {/* Navigation with Logo - Matching Homepage */}
+      <nav className="bg-[#3B82F6] text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo Section with Text */}
+            <Link href="/" className="flex items-center space-x-3">
+              <Image 
+                src="/assets/images/logo.svg" 
+                alt="TheraBrake Academy" 
+                width={60} 
+                height={60}
+                className="h-14 w-14"
+                priority
+              />
+              <span className="text-2xl font-bold">
+                Therabrake Academy™
+              </span>
+            </Link>
+            
+            {/* Navigation Links */}
+            <div className="flex items-center space-x-8">
+              <Link 
+                href="/" 
+                className="hover:text-[#FACC15] transition font-medium"
+              >
+                Home
+              </Link>
+              <Link 
+                href="/courses" 
+                className="hover:text-[#FACC15] transition font-medium border-b-2 border-[#FACC15] pb-1"
+              >
+                Courses
+              </Link>
+              <Link 
+                href="/about" 
+                className="hover:text-[#FACC15] transition font-medium"
+              >
+                About
+              </Link>
+              <Link 
+                href="/contact" 
+                className="hover:text-[#FACC15] transition font-medium"
+              >
+                Contact
+              </Link>
+              <Link 
+                href="/login" 
+                className="bg-[#FACC15] text-[#1F2937] px-4 py-2 rounded-lg hover:bg-[#FDE047] transition font-semibold"
+              >
                 Login
-              </button>
-            </nav>
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Hero Section */}
-      <div className="bg-gradient-to-br from-blue-50 to-green-50 py-12">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-4 text-gray-900">
+      {/* Hero Section - Matching Homepage Style */}
+      <div className="bg-gradient-to-b from-[#3B82F6] to-[#60A5FA] text-white py-16 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl font-bold mb-4">
             Professional Development & Training
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-[#FACC15] font-semibold">
             14 Comprehensive Courses • 26 CE Hours Available
           </p>
           
-          <div className="inline-flex items-center gap-3 p-4 bg-green-100 rounded-xl">
+          <div className="inline-flex items-center gap-3 p-4 bg-white/10 rounded-xl mt-8">
             <span className="text-2xl">✅</span>
-            <span className="text-green-800 font-semibold">
+            <span className="text-white font-semibold">
               Texas LPC Approved • NBCC Provider #87569
             </span>
           </div>
@@ -210,8 +245,8 @@ export default function CoursesPage() {
               key={tab}
               className={`px-6 py-3 rounded-lg font-semibold transition ${
                 tab === 'All Courses' 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
+                  ? 'bg-[#3B82F6] text-white' 
+                  : 'bg-[#F3F4F6] hover:bg-gray-200 text-[#1F2937]'
               }`}
             >
               {tab}
@@ -248,10 +283,10 @@ export default function CoursesPage() {
               
               {/* Course Content */}
               <div className="p-5">
-                <h3 className="text-lg font-bold text-gray-900 mb-1 line-clamp-2">
+                <h3 className="text-lg font-bold text-[#1F2937] mb-1 line-clamp-2">
                   {course.title}
                 </h3>
-                <p className="text-sm text-gray-500 mb-2">{course.description}</p>
+                <p className="text-sm text-[#9CA3AF] mb-2">{course.description}</p>
                 
                 <div className="flex items-center gap-2 mb-3">
                   <span 
@@ -261,23 +296,23 @@ export default function CoursesPage() {
                     {course.category}
                   </span>
                   {course.ce_hours > 0 && (
-                    <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full font-semibold">
+                    <span className="text-xs px-2 py-1 bg-[#10B981]/10 text-[#10B981] rounded-full font-semibold">
                       {course.ce_hours} CE Hours
                     </span>
                   )}
                 </div>
                 
                 {/* Price and CTA */}
-                <div className="pt-3 border-t border-gray-100">
+                <div className="pt-3 border-t border-[#F3F4F6]">
                   <div className="flex items-baseline justify-between mb-3">
-                    <span className="text-3xl font-bold text-blue-600">
+                    <span className="text-3xl font-bold text-[#3B82F6]">
                       ${course.price}
                     </span>
-                    <span className="text-xs text-gray-500">
+                    <span className="text-xs text-[#9CA3AF]">
                       one-time
                     </span>
                   </div>
-                  <button className="w-full bg-orange-500 hover:bg-orange-600 text-white px-4 py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-2">
+                  <button className="w-full bg-[#F97316] hover:bg-[#EA580C] text-white px-4 py-2.5 rounded-lg font-semibold transition flex items-center justify-center gap-2">
                     <span>View Details</span>
                     <span>→</span>
                   </button>
@@ -288,25 +323,31 @@ export default function CoursesPage() {
         </div>
       </div>
 
-      {/* Footer CTA */}
-      <div className="bg-gradient-to-r from-blue-600 to-green-500 py-16">
+      {/* Footer CTA - Matching Homepage Style */}
+      <div className="bg-gradient-to-r from-[#3B82F6] to-[#10B981] py-16">
         <div className="max-w-4xl mx-auto px-4 text-center text-white">
           <h2 className="text-3xl font-bold mb-4">
             Ready to Advance Your Career?
           </h2>
-          <p className="text-xl mb-8 text-blue-100">
+          <p className="text-xl mb-8 opacity-90">
             Join thousands of professionals who have transformed their practice
           </p>
           <div className="flex gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition">
+            <button className="bg-white text-[#3B82F6] px-8 py-4 rounded-lg font-bold hover:bg-gray-100 transition">
               Browse All Courses
             </button>
-            <button className="bg-orange-500 text-white px-8 py-4 rounded-lg font-bold hover:bg-orange-600 transition">
+            <button className="bg-[#F97316] text-white px-8 py-4 rounded-lg font-bold hover:bg-[#EA580C] transition">
               Get Started Today
             </button>
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Contact Info */}
+      <div className="text-center py-8 text-[#9CA3AF] bg-[#F3F4F6]">
+        <p>6120 College St. Suite D185, Beaumont, TX 77707</p>
+        <p>(346) 298-2988 | courses@therabrake.academy</p>
+      </div>
+    </main>
   );
 }
