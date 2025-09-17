@@ -1,16 +1,58 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* Navigation */}
-      <nav className="bg-[#3B82F6] text-white p-4 shadow-lg">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <h1 className="text-2xl font-bold">TheraBrake Academy™</h1>
-          <div className="space-x-6">
-            <Link href="/" className="hover:text-[#FACC15] transition">Home</Link>
-            <Link href="/courses" className="hover:text-[#FACC15] transition">Courses</Link>
-            <Link href="/login" className="hover:text-[#FACC15] transition">Login</Link>
+      {/* Navigation with Logo */}
+      <nav className="bg-[#3B82F6] text-white shadow-lg">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo Section */}
+            <Link href="/" className="flex items-center space-x-3">
+              <Image 
+                src="/assets/images/logo.svg" 
+                alt="TheraBrake Academy" 
+                width={180} 
+                height={60}
+                className="h-14 w-auto"
+                priority
+              />
+            </Link>
+            
+            {/* Navigation Links */}
+            <div className="flex items-center space-x-8">
+              <Link 
+                href="/" 
+                className="hover:text-[#FACC15] transition font-medium"
+              >
+                Home
+              </Link>
+              <Link 
+                href="/courses" 
+                className="hover:text-[#FACC15] transition font-medium"
+              >
+                Courses
+              </Link>
+              <Link 
+                href="/about" 
+                className="hover:text-[#FACC15] transition font-medium"
+              >
+                About
+              </Link>
+              <Link 
+                href="/contact" 
+                className="hover:text-[#FACC15] transition font-medium"
+              >
+                Contact
+              </Link>
+              <Link 
+                href="/login" 
+                className="bg-[#FACC15] text-[#1F2937] px-4 py-2 rounded-lg hover:bg-[#FDE047] transition font-semibold"
+              >
+                Login
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -19,7 +61,7 @@ export default function Home() {
       <div className="bg-gradient-to-b from-[#3B82F6] to-[#60A5FA] text-white py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-4">
-            🌟 Welcome to TheraBrake Academy™
+            Welcome to TheraBrake Academy™
           </h1>
           <p className="text-3xl font-semibold text-[#FACC15]">
             Pause, Process, Progress.
@@ -42,7 +84,7 @@ export default function Home() {
           {/* Professional Development */}
           <div className="bg-white rounded-lg shadow-lg p-8 border-t-4 border-[#10B981]">
             <h2 className="text-2xl font-bold text-[#1F2937] mb-4">
-              🎓 For Mental Health Professionals
+              For Mental Health Professionals
             </h2>
             <p className="text-[#1F2937] mb-6">
               Earn accredited <strong>Continuing Education Units (CEUs)</strong> while mastering real-world skills that 
@@ -54,7 +96,7 @@ export default function Home() {
               href="/courses?filter=professional" 
               className="inline-block bg-[#10B981] hover:bg-[#059669] text-white px-6 py-3 rounded-lg font-semibold transition"
             >
-              👉 Explore Professional Development Catalog
+              Explore Professional Development Catalog
             </Link>
             <p className="text-sm text-[#9CA3AF] mt-4">
               See why clinicians trust TheraBrake Academy™ to meet state requirements <em>and</em> deliver practical tools you can use tomorrow.
@@ -64,7 +106,7 @@ export default function Home() {
           {/* Personal Growth */}
           <div className="bg-white rounded-lg shadow-lg p-8 border-t-4 border-[#F97316]">
             <h2 className="text-2xl font-bold text-[#1F2937] mb-4">
-              �� For Personal Growth & Healing
+              For Personal Growth & Healing
             </h2>
             <p className="text-[#1F2937] mb-6">
               Life happens. Betrayal, financial setbacks, relationship struggles, even health crises. But your story isn't over. 
@@ -76,7 +118,7 @@ export default function Home() {
               href="/courses?filter=personal" 
               className="inline-block bg-[#F97316] hover:bg-[#EA580C] text-white px-6 py-3 rounded-lg font-semibold transition"
             >
-              👉 Visit Personal Development Catalog
+              Visit Personal Development Catalog
             </Link>
             <p className="text-sm text-[#9CA3AF] mt-4">
               Begin your journey to healing and empowerment today.
@@ -87,39 +129,39 @@ export default function Home() {
         {/* Why Choose Section */}
         <div className="bg-[#F3F4F6] rounded-lg p-8 mb-12">
           <h2 className="text-3xl font-bold text-[#1F2937] mb-6 text-center">
-            🚀 Why Choose TheraBrake Academy™?
+            Why Choose TheraBrake Academy™?
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="flex items-start">
-              <span className="text-[#10B981] mr-3">✓</span>
+              <span className="text-[#10B981] mr-3 text-xl">✓</span>
               <div>
                 <strong className="text-[#1F2937]">Dual-Stream Learning</strong>
                 <p className="text-sm text-[#9CA3AF]">Professional CEUs + Personal Development</p>
               </div>
             </div>
             <div className="flex items-start">
-              <span className="text-[#10B981] mr-3">✓</span>
+              <span className="text-[#10B981] mr-3 text-xl">✓</span>
               <div>
                 <strong className="text-[#1F2937]">Trusted & Accredited</strong>
                 <p className="text-sm text-[#9CA3AF]">Courses that meet state and national requirements</p>
               </div>
             </div>
             <div className="flex items-start">
-              <span className="text-[#10B981] mr-3">✓</span>
+              <span className="text-[#10B981] mr-3 text-xl">✓</span>
               <div>
                 <strong className="text-[#1F2937]">Practical & Transformational</strong>
                 <p className="text-sm text-[#9CA3AF]">Step-by-step guidance you can actually apply</p>
               </div>
             </div>
             <div className="flex items-start">
-              <span className="text-[#10B981] mr-3">✓</span>
+              <span className="text-[#10B981] mr-3 text-xl">✓</span>
               <div>
                 <strong className="text-[#1F2937]">Learn Your Way</strong>
                 <p className="text-sm text-[#9CA3AF]">Self-paced video lessons, interactive quizzes, and downloadable workbooks</p>
               </div>
             </div>
             <div className="flex items-start">
-              <span className="text-[#10B981] mr-3">✓</span>
+              <span className="text-[#10B981] mr-3 text-xl">✓</span>
               <div>
                 <strong className="text-[#1F2937]">Certificates You Can Share</strong>
                 <p className="text-sm text-[#9CA3AF]">Celebrate your progress and add credibility to your career</p>
@@ -130,19 +172,19 @@ export default function Home() {
 
         {/* Call to Action */}
         <div className="bg-gradient-to-r from-[#3B82F6] to-[#10B981] rounded-lg p-8 text-white text-center">
-          <h2 className="text-3xl font-bold mb-6">🔑 Your Next Step Starts Here</h2>
+          <h2 className="text-3xl font-bold mb-6">Your Next Step Starts Here</h2>
           <div className="grid md:grid-cols-3 gap-6 mb-8">
             <div>
-              <p className="font-semibold mb-2">📚 Browse Our Courses</p>
-              <p className="text-sm">Find the right program for your needs.</p>
+              <p className="font-semibold mb-2 text-lg">Browse Our Courses</p>
+              <p className="text-sm opacity-90">Find the right program for your needs.</p>
             </div>
             <div>
-              <p className="font-semibold mb-2">💻 Enroll Today</p>
-              <p className="text-sm">Gain instant access to your learning dashboard.</p>
+              <p className="font-semibold mb-2 text-lg">Enroll Today</p>
+              <p className="text-sm opacity-90">Gain instant access to your learning dashboard.</p>
             </div>
             <div>
-              <p className="font-semibold mb-2">🎉 Transform Tomorrow</p>
-              <p className="text-sm">Apply what you learn for real, lasting change.</p>
+              <p className="font-semibold mb-2 text-lg">Transform Tomorrow</p>
+              <p className="text-sm opacity-90">Apply what you learn for real, lasting change.</p>
             </div>
           </div>
           <Link 
@@ -152,14 +194,14 @@ export default function Home() {
             Start Your Journey Today
           </Link>
           <p className="mt-6 text-lg">
-            ✨ <strong>TheraBrake Academy™</strong> isn't just another online school—it's where education meets empowerment.
+            <strong>TheraBrake Academy™</strong> isn't just another online school—it's where education meets empowerment.
           </p>
         </div>
 
         {/* Contact Info */}
         <div className="text-center mt-12 text-[#9CA3AF]">
-          <p>📍 6120 College St. Suite D185, Beaumont, TX 77707</p>
-          <p>📞 (346) 298-2988 | ✉️ courses@therabrake.academy</p>
+          <p>6120 College St. Suite D185, Beaumont, TX 77707</p>
+          <p>(346) 298-2988 | courses@therabrake.academy</p>
         </div>
       </div>
     </main>
