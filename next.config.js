@@ -1,19 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
+module.exports = {
+  output: 'standalone',
   images: {
     domains: ['ynizozzfjkocvbycxwvo.supabase.co'],
   },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  experimental: {
-    missingSuspenseWithCSRBailout: false,
-  },
-  output: 'standalone',
 }
-
-module.exports = nextConfig
