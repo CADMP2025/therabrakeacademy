@@ -1,0 +1,628 @@
+// therabrake/apps/web/app/auth/login/page.js
+'use client';
+
+import { useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { 
+  Eye, 
+  EyeOff, 
+  Mail, 
+  Lock, 
+  ArrowRight, 
+  CheckCircle,
+  AlertCircle,
+  Loader2,
+  BookOpen,
+  Award,
+  Users,
+  GraduationCap
+} from 'lucide-react';
+
+export default function LoginPage() {
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+  
+  // Form state
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [licenseNumber, setLicenseNumber] = useState('');
+  const [accountType, setAccountType] = useState('student');
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  
+  // UI state
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
+
+  // Handle Login
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password: password,
+      });
+      
+      if (error) throw error;
+      
+      // Success - redirect based on user role
+      setSuccess('Login successful! Redirecting...');
+      
+      // Check user role and redirect accordingly
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', data.user.id)
+        .single();
+        
+      setTimeout(() => {
+        if (profile?.role === 'instructor') {
+          router.push('/instructor/dashboard');
+        } else if (profile?.role === 'admin') {
+          router.push('/admin/dashboard');
+        } else {
+          router.push('/dashboard');
+        }
+      }, 1000);
+      
+    } catch (error) {
+      setError(error.message || 'Invalid email or password');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle Sign Up
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    
+    // Validation
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      setIsLoading(false);
+      return;
+    }
+    
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      setIsLoading(false);
+      return;
+    }
+    
+    try {
+      // Create user account
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password: password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+          data: {
+            full_name: fullName,
+            account_type: accountType,
+            license_number: licenseNumber || null,
+          }
+        }
+      });
+      
+      if (error) throw error;
+      
+      // Create profile entry
+      if (data.user) {
+        const { error: profileError } = await supabase
+          .from('profiles')
+          .insert({
+            id: data.user.id,
+            full_name: fullName,
+            email: email.trim(),
+            role: accountType,
+            license_number: licenseNumber || null,
+            created_at: new Date().toISOString(),
+          });
+          
+        if (profileError) console.error('Profile creation error:', profileError);
+      }
+      
+      setSuccess('Account created successfully! Please check your email to verify your account.');
+      
+      // Clear form
+      setEmail('');
+      setPassword('');
+      setConfirmPassword('');
+      setFullName('');
+      setLicenseNumber('');
+      
+    } catch (error) {
+      setError(error.message || 'Failed to create account');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Handle Forgot Password
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
+    setSuccess('');
+    
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
+      });
+      
+      if (error) throw error;
+      
+      setSuccess('Password reset instructions have been sent to your email.');
+      setForgotPasswordMode(false);
+      
+    } catch (error) {
+      setError(error.message || 'Failed to send reset email');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-[#60A5FA] via-[#3B82F6] to-[#1E3A8A]">
+      {/* Header */}
+      <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="relative">
+                <span className="text-4xl transform transition-transform group-hover:scale-110">
+                  🧠
+                </span>
+              </div>
+              <div>
+                <span className="text-2xl font-bold bg-gradient-to-r from-[#F97316] to-[#3B82F6] bg-clip-text text-transparent">
+                  TheraBrake Academy
+                </span>
+                <span className="text-xs text-gray-500 block -mt-1">
+                  Pause. Process. Progress™
+                </span>
+              </div>
+            </Link>
+            
+            <nav className="hidden md:flex space-x-6">
+              <Link href="/courses" className="text-gray-700 hover:text-[#3B82F6] transition">
+                Courses
+              </Link>
+              <Link href="/about" className="text-gray-700 hover:text-[#3B82F6] transition">
+                About
+              </Link>
+              <Link href="/contact" className="text-gray-700 hover:text-[#3B82F6] transition">
+                Contact
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex min-h-[calc(100vh-64px)]">
+        {/* Left Side - Features */}
+        <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12">
+          <div className="max-w-lg">
+            <h2 className="text-4xl font-bold text-white mb-6">
+              Welcome to Your Learning Journey
+            </h2>
+            <p className="text-xl text-white/90 mb-8">
+              Access professional development courses, earn CE credits, and transform your practice.
+            </p>
+            
+            <div className="space-y-6">
+              <div className="flex items-start space-x-4">
+                <div className="bg-white/20 rounded-lg p-3">
+                  <Award className="h-6 w-6 text-[#FACC15]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold">Texas LPC Approved</h3>
+                  <p className="text-white/80 text-sm">NBCC Provider #87569</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="bg-white/20 rounded-lg p-3">
+                  <BookOpen className="h-6 w-6 text-[#10B981]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold">14+ Professional Courses</h3>
+                  <p className="text-white/80 text-sm">CE, Personal & Professional Development</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="bg-white/20 rounded-lg p-3">
+                  <Users className="h-6 w-6 text-[#F97316]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold">Expert Instructors</h3>
+                  <p className="text-white/80 text-sm">Learn from licensed professionals</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-4">
+                <div className="bg-white/20 rounded-lg p-3">
+                  <GraduationCap className="h-6 w-6 text-[#A855F7]" />
+                </div>
+                <div>
+                  <h3 className="text-white font-semibold">Instant Certificates</h3>
+                  <p className="text-white/80 text-sm">Download certificates upon completion</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side - Login/Signup Form */}
+        <div className="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white/10 backdrop-blur-sm">
+          <div className="w-full max-w-md">
+            <div className="bg-white rounded-2xl shadow-2xl p-8">
+              {/* Logo for mobile */}
+              <div className="lg:hidden text-center mb-6">
+                <span className="text-5xl">🧠</span>
+                <h1 className="text-2xl font-bold mt-2 bg-gradient-to-r from-[#F97316] to-[#3B82F6] bg-clip-text text-transparent">
+                  TheraBrake Academy
+                </h1>
+              </div>
+
+              {/* Success/Error Messages */}
+              {success && (
+                <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded-lg flex items-start">
+                  <CheckCircle className="h-5 w-5 text-green-600 mr-2 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-green-800">{success}</p>
+                </div>
+              )}
+              
+              {error && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start">
+                  <AlertCircle className="h-5 w-5 text-red-600 mr-2 flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-red-800">{error}</p>
+                </div>
+              )}
+
+              {/* Forgot Password Form */}
+              {forgotPasswordMode ? (
+                <>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Reset Password</h2>
+                  <p className="text-gray-600 mb-6">Enter your email to receive reset instructions</p>
+                  
+                  <form onSubmit={handleForgotPassword}>
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Email Address
+                      </label>
+                      <div className="relative">
+                        <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                        <input
+                          type="email"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                          placeholder="your@email.com"
+                          required
+                        />
+                      </div>
+                    </div>
+                    
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full bg-[#3B82F6] text-white py-3 rounded-lg hover:bg-[#60A5FA] transition duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isLoading ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <>Send Reset Email</>
+                      )}
+                    </button>
+                    
+                    <button
+                      type="button"
+                      onClick={() => setForgotPasswordMode(false)}
+                      className="w-full mt-3 text-gray-600 hover:text-gray-900 text-sm"
+                    >
+                      Back to Login
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <>
+                  {/* Tab Switcher */}
+                  <div className="flex rounded-lg bg-gray-100 p-1 mb-6">
+                    <button
+                      onClick={() => setIsLogin(true)}
+                      className={`flex-1 py-2 rounded-md text-sm font-medium transition ${
+                        isLogin 
+                          ? 'bg-white text-gray-900 shadow' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
+                      Sign In
+                    </button>
+                    <button
+                      onClick={() => setIsLogin(false)}
+                      className={`flex-1 py-2 rounded-md text-sm font-medium transition ${
+                        !isLogin 
+                          ? 'bg-white text-gray-900 shadow' 
+                          : 'text-gray-500 hover:text-gray-700'
+                      }`}
+                    >
+                      Create Account
+                    </button>
+                  </div>
+
+                  {/* Login Form */}
+                  {isLogin ? (
+                    <>
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Welcome Back!</h2>
+                      <p className="text-gray-600 mb-6">Sign in to continue your learning journey</p>
+                      
+                      <form onSubmit={handleLogin}>
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Email Address
+                          </label>
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                            <input
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                              placeholder="your@email.com"
+                              required
+                            />
+                          </div>
+                        </div>
+                        
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Password
+                          </label>
+                          <div className="relative">
+                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                            <input
+                              type={showPassword ? 'text' : 'password'}
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                              placeholder="••••••••"
+                              required
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword(!showPassword)}
+                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            >
+                              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                            </button>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-center justify-between mb-6">
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={rememberMe}
+                              onChange={(e) => setRememberMe(e.target.checked)}
+                              className="h-4 w-4 text-[#3B82F6] focus:ring-[#3B82F6] border-gray-300 rounded"
+                            />
+                            <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                          </label>
+                          
+                          <button
+                            type="button"
+                            onClick={() => setForgotPasswordMode(true)}
+                            className="text-sm text-[#3B82F6] hover:text-[#60A5FA]"
+                          >
+                            Forgot password?
+                          </button>
+                        </div>
+                        
+                        <button
+                          type="submit"
+                          disabled={isLoading}
+                          className="w-full bg-[#F97316] text-white py-3 rounded-lg hover:bg-[#FB923C] transition duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isLoading ? (
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                          ) : (
+                            <>
+                              Sign In
+                              <ArrowRight className="ml-2 h-5 w-5" />
+                            </>
+                          )}
+                        </button>
+                      </form>
+                    </>
+                  ) : (
+                    /* Sign Up Form */
+                    <>
+                      <h2 className="text-2xl font-bold text-gray-900 mb-2">Create Your Account</h2>
+                      <p className="text-gray-600 mb-6">Join TheraBrake Academy today</p>
+                      
+                      <form onSubmit={handleSignUp}>
+                        {/* Account Type Selection */}
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            I am a...
+                          </label>
+                          <div className="grid grid-cols-2 gap-3">
+                            <button
+                              type="button"
+                              onClick={() => setAccountType('student')}
+                              className={`py-3 px-4 rounded-lg border-2 transition ${
+                                accountType === 'student'
+                                  ? 'border-[#3B82F6] bg-[#3B82F6]/10 text-[#3B82F6]'
+                                  : 'border-gray-300 hover:border-gray-400'
+                              }`}
+                            >
+                              <Users className="h-5 w-5 mx-auto mb-1" />
+                              <span className="text-sm font-medium">Student</span>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setAccountType('instructor')}
+                              className={`py-3 px-4 rounded-lg border-2 transition ${
+                                accountType === 'instructor'
+                                  ? 'border-[#3B82F6] bg-[#3B82F6]/10 text-[#3B82F6]'
+                                  : 'border-gray-300 hover:border-gray-400'
+                              }`}
+                            >
+                              <GraduationCap className="h-5 w-5 mx-auto mb-1" />
+                              <span className="text-sm font-medium">Instructor</span>
+                            </button>
+                          </div>
+                        </div>
+                        
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Full Name
+                          </label>
+                          <input
+                            type="text"
+                            value={fullName}
+                            onChange={(e) => setFullName(e.target.value)}
+                            className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                            placeholder="Jane Doe"
+                            required
+                          />
+                        </div>
+                        
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Email Address
+                          </label>
+                          <div className="relative">
+                            <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                            <input
+                              type="email"
+                              value={email}
+                              onChange={(e) => setEmail(e.target.value)}
+                              className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                              placeholder="your@email.com"
+                              required
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* License Number (optional) */}
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            License Number (Optional)
+                            <span className="text-xs text-gray-500 ml-1">For CE credit tracking</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={licenseNumber}
+                            onChange={(e) => setLicenseNumber(e.target.value)}
+                            className="w-full px-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                            placeholder="LPC-12345"
+                          />
+                        </div>
+                        
+                        <div className="mb-4">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Password
+                          </label>
+                          <div className="relative">
+                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                            <input
+                              type={showPassword ? 'text' : 'password'}
+                              value={password}
+                              onChange={(e) => setPassword(e.target.value)}
+                              className="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                              placeholder="••••••••"
+                              required
+                              minLength={8}
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword(!showPassword)}
+                              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                            >
+                              {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                            </button>
+                          </div>
+                        </div>
+                        
+                        <div className="mb-6">
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            Confirm Password
+                          </label>
+                          <div className="relative">
+                            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                            <input
+                              type={showPassword ? 'text' : 'password'}
+                              value={confirmPassword}
+                              onChange={(e) => setConfirmPassword(e.target.value)}
+                              className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#3B82F6] focus:border-transparent"
+                              placeholder="••••••••"
+                              required
+                              minLength={8}
+                            />
+                          </div>
+                        </div>
+                        
+                        <button
+                          type="submit"
+                          disabled={isLoading}
+                          className="w-full bg-[#10B981] text-white py-3 rounded-lg hover:bg-[#34D399] transition duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {isLoading ? (
+                            <Loader2 className="h-5 w-5 animate-spin" />
+                          ) : (
+                            <>
+                              Create Account
+                              <ArrowRight className="ml-2 h-5 w-5" />
+                            </>
+                          )}
+                        </button>
+                        
+                        <p className="text-xs text-gray-500 mt-4 text-center">
+                          By creating an account, you agree to our{' '}
+                          <Link href="/terms" className="text-[#3B82F6] hover:underline">
+                            Terms of Service
+                          </Link>{' '}
+                          and{' '}
+                          <Link href="/privacy" className="text-[#3B82F6] hover:underline">
+                            Privacy Policy
+                          </Link>
+                        </p>
+                      </form>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+            
+            {/* Contact Info */}
+            <div className="mt-6 text-center text-white/80 text-sm">
+              <p>Need help? Contact us:</p>
+              <p className="mt-1">
+                <a href="tel:3462982988" className="hover:text-white">(346) 298-2988</a>
+                {' • '}
+                <a href="mailto:admin@therabrake.academy" className="hover:text-white">admin@therabrake.academy</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

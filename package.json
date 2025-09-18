@@ -23,6 +23,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.57.4",
     "lucide-react": "^0.544.0",
     "pdf-lib": "^1.17.1",
