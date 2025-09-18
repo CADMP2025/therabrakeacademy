@@ -1,89 +1,142 @@
+import Link from 'next/link';
+
 export default function HomePage() {
   return (
-    <div>
-      {/* Test if basic styling works */}
-      <div style={{ backgroundColor: '#3B82F6', color: 'white', padding: '80px 20px', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '48px', fontWeight: 'bold', marginBottom: '20px' }}>
-          🧠 TheraBrake Academy™
-        </h1>
-        <p style={{ fontSize: '24px', marginBottom: '10px' }}>
-          Pause, Process, Progress
-        </p>
-        <p style={{ fontSize: '16px', marginBottom: '40px' }}>
-          If you can see this styled correctly, the page is working!
-        </p>
-        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-          <a 
-            href="/courses" 
-            style={{
-              padding: '15px 30px',
-              backgroundColor: 'white',
-              color: '#3B82F6',
-              textDecoration: 'none',
-              borderRadius: '8px',
-              fontWeight: 'bold'
-            }}
-          >
-            Browse Courses
-          </a>
-          <a 
-            href="/auth/register" 
-            style={{
-              padding: '15px 30px',
-              backgroundColor: '#F97316',
-              color: 'white',
-              textDecoration: 'none',
-              borderRadius: '8px',
-              fontWeight: 'bold'
-            }}
-          >
-            Get Started
-          </a>
+    <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-br from-cyan-400 via-blue-500 to-blue-700 text-white py-20">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4">
+            🌟 Welcome to TheraBrake Academy™
+          </h1>
+          <p className="text-3xl font-light mb-8">
+            Pause, Process, Progress.
+          </p>
+          <p className="text-xl leading-relaxed">
+            At <span className="font-bold">TheraBrake Academy™</span>, learning isn't just about earning credits 
+            or ticking boxes—it's about transformation. Whether you're a licensed professional ready to grow 
+            your practice or an individual ready to reclaim your life, you'll find a course here designed for you.
+          </p>
         </div>
       </div>
 
-      {/* Test if Tailwind classes work */}
-      <div className="bg-blue-600 text-white p-8 text-center">
-        <p className="text-2xl">If this has a blue background, Tailwind is working!</p>
-      </div>
+      {/* Main Content */}
+      <div className="max-w-6xl mx-auto px-4 py-16">
+        {/* For Mental Health Professionals */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-gray-900 flex items-center">
+            🎓 For Mental Health Professionals
+          </h2>
+          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+            Earn accredited <span className="font-bold">Continuing Education Units (CEUs)</span> while mastering 
+            real-world skills that elevate your career and protect your clients. From{' '}
+            <span className="font-bold">Ethics and HIPAA Compliance</span> to{' '}
+            <span className="font-bold">Trauma-Informed Care</span> and{' '}
+            <span className="font-bold">Telehealth Mastery</span>, our courses are built to keep you 
+            compliant, confident, and competitive.
+          </p>
+          <p className="text-lg text-gray-700">
+            👉 Explore our{' '}
+            <Link href="/courses?type=CE" className="font-bold text-blue-600 hover:underline">
+              Professional Development Catalog
+            </Link>{' '}
+            to see why clinicians trust TheraBrake Academy™ to meet state requirements{' '}
+            <span className="italic">and</span> deliver practical tools you can use tomorrow.
+          </p>
+        </section>
 
-      {/* Inline styled content */}
-      <div style={{ padding: '40px', maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ fontSize: '32px', fontWeight: 'bold', marginBottom: '20px', textAlign: 'center' }}>
-          Featured Courses
-        </h2>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
-          {/* Course Card 1 */}
-          <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            <div style={{ fontSize: '48px', marginBottom: '10px' }}>⚖️</div>
-            <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>
-              Ethics for Professional Counselors
-            </h3>
-            <p style={{ color: '#666', marginBottom: '10px' }}>6 CE Hours • Texas LPC Approved</p>
-            <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#F97316' }}>$99</p>
-          </div>
+        {/* For Personal Growth & Healing */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-6 text-gray-900 flex items-center">
+            🌱 For Personal Growth & Healing
+          </h2>
+          <p className="text-lg text-gray-700 mb-6 leading-relaxed">
+            Life happens. Betrayal, financial setbacks, relationship struggles, even health crises. 
+            But your story isn't over. With courses like <span className="font-bold">Healing Forward</span>,{' '}
+            <span className="font-bold">Rebuilding After Betrayal</span>,{' '}
+            <span className="font-bold">Finding the Perfect Match</span>, and{' '}
+            <span className="font-bold">Cancer Diagnosis: It's Not the End…</span>, you'll discover 
+            powerful frameworks to help you pause, process, and progress toward a stronger you.
+          </p>
+          <p className="text-lg text-gray-700">
+            👉 Visit our{' '}
+            <Link href="/courses?type=Personal" className="font-bold text-orange-500 hover:underline">
+              Personal Development Catalog
+            </Link>{' '}
+            and begin your journey to healing and empowerment today.
+          </p>
+        </section>
 
-          {/* Course Card 2 */}
-          <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            <div style={{ fontSize: '48px', marginBottom: '10px' }}>🌱</div>
-            <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>
-              Trauma-Informed Practice
-            </h3>
-            <p style={{ color: '#666', marginBottom: '10px' }}>6 CE Hours • NBCC Approved</p>
-            <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#F97316' }}>$99</p>
-          </div>
+        {/* Why Choose Section */}
+        <section className="mb-16 bg-gray-50 rounded-xl p-8">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 flex items-center">
+            🚀 Why Choose TheraBrake Academy™?
+          </h2>
+          <ul className="space-y-4 text-lg text-gray-700">
+            <li className="flex items-start">
+              <span className="mr-3 text-green-500 text-xl">•</span>
+              <div><span className="font-bold">Dual-Stream Learning</span> – Professional CEUs + Personal Development</div>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-3 text-green-500 text-xl">•</span>
+              <div><span className="font-bold">Trusted & Accredited</span> – Courses that meet state and national requirements</div>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-3 text-green-500 text-xl">•</span>
+              <div><span className="font-bold">Practical & Transformational</span> – Step-by-step guidance you can actually apply</div>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-3 text-green-500 text-xl">•</span>
+              <div><span className="font-bold">Learn Your Way</span> – Self-paced video lessons, interactive quizzes, and downloadable workbooks</div>
+            </li>
+            <li className="flex items-start">
+              <span className="mr-3 text-green-500 text-xl">•</span>
+              <div><span className="font-bold">Certificates You Can Share</span> – Celebrate your progress and add credibility to your career</div>
+            </li>
+          </ul>
+        </section>
 
-          {/* Course Card 3 */}
-          <div style={{ backgroundColor: 'white', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
-            <div style={{ fontSize: '48px', marginBottom: '10px' }}>🚀</div>
-            <h3 style={{ fontSize: '20px', fontWeight: 'bold', marginBottom: '10px' }}>
-              LEAP AND LAUNCH!
-            </h3>
-            <p style={{ color: '#666', marginBottom: '10px' }}>Build Your Private Practice</p>
-            <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#F97316' }}>$149</p>
+        {/* Next Steps */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 flex items-center">
+            🔑 Your Next Step Starts Here
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <p className="text-xl mb-2">
+                📚 <span className="font-bold">Browse Our Courses →</span>
+              </p>
+              <p className="text-gray-600">Find the right program for your needs.</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <p className="text-xl mb-2">
+                �� <span className="font-bold">Enroll Today →</span>
+              </p>
+              <p className="text-gray-600">Gain instant access to your learning dashboard.</p>
+            </div>
+            <div className="bg-white p-6 rounded-xl shadow-lg">
+              <p className="text-xl mb-2">
+                🎉 <span className="font-bold">Transform Tomorrow →</span>
+              </p>
+              <p className="text-gray-600">Apply what you learn for real, lasting change.</p>
+            </div>
           </div>
-        </div>
+        </section>
+
+        {/* Final CTA */}
+        <section className="text-center py-12 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-xl">
+          <p className="text-2xl text-gray-900">
+            ✨ <span className="font-bold">TheraBrake Academy™</span> isn't just another online school—it's where education meets empowerment.
+          </p>
+          <div className="mt-8 space-x-4">
+            <Link 
+              href="/courses" 
+              className="inline-block px-8 py-4 bg-blue-600 text-white font-bold text-lg rounded-full hover:bg-blue-700 transition-all"
+            >
+              Start Your Journey
+            </Link>
+          </div>
+        </section>
       </div>
     </div>
   );
