@@ -210,7 +210,3 @@ export default function CreateCoursePage() {
 }
 
 // Metadata for the page (Next.js 13+)
-export const metadata = {
-  title: 'Create Course - TheraBrake Academy',
-  description: 'Create a new course with our easy-to-use course builder'
-};
