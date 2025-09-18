@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import Link from 'next/link';
 
@@ -32,9 +33,6 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-gray-400">
               <li><Link href="/courses" className="hover:text-white">All Courses</Link></li>
-              <li><Link href="/courses?type=CE" className="hover:text-white">CE Courses</Link></li>
-              <li><Link href="/courses?type=Personal" className="hover:text-white">Personal Development</Link></li>
-              <li><Link href="/courses?type=Professional" className="hover:text-white">Professional Training</Link></li>
               <li><Link href="/about" className="hover:text-white">About Us</Link></li>
               <li><Link href="/contact" className="hover:text-white">Contact</Link></li>
             </ul>
@@ -48,14 +46,12 @@ export default function Footer() {
               <li><Link href="/faq" className="hover:text-white">FAQ</Link></li>
               <li><Link href="/terms" className="hover:text-white">Terms of Service</Link></li>
               <li><Link href="/privacy" className="hover:text-white">Privacy Policy</Link></li>
-              <li><Link href="/certificates/verify" className="hover:text-white">Verify Certificate</Link></li>
             </ul>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
           <p>© 2024 TheraBrake Academy™. All rights reserved.</p>
-          <p className="mt-2">Mental Health Defense and Fitness PLLC</p>
         </div>
       </div>
     </footer>
