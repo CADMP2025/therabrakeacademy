@@ -2,7 +2,6 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
 
 # Testing
 /coverage
@@ -13,7 +12,6 @@
 
 # Production
 /build
-/dist
 
 # Misc
 .DS_Store
@@ -23,7 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
 # Local env files
 .env*.local
@@ -38,50 +35,3 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*.swn
-
-# OS
-Thumbs.db
-.DS_Store
-
-# Certificates
-*.pem
-*.key
-*.crt
-
-# Logs
-logs
-*.log
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Temporary files
-tmp/
-temp/
-.temp/
-
-# Uploads (local development)
-uploads/
-public/uploads/
-
-# Database
-*.sqlite
-*.sqlite3
-*.db
-
-# Supabase
-supabase/.branches
-supabase/.temp
-
-# Bundle analyzer
-.next/analyze/
