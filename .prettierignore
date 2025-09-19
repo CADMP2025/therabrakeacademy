@@ -1,0 +1,19 @@
+# Dependencies
+node_modules
+.next
+.vercel
+out
+dist
+build
+
+# Files
+public
+coverage
+.env*
+*.md
+*.json
+*.lock
+*.log
+
+# Generated
+*.generated.*
