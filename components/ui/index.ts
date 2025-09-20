@@ -1,2 +1,5 @@
 export { Button } from './button'
+export { Input, Textarea, Select } from './input'
+export { Spinner } from './spinner'
+export type { InputProps, TextareaProps, SelectProps } from './input'
 export type { ButtonProps } from './button'
