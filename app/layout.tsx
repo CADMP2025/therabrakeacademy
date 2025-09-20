@@ -16,13 +16,13 @@ export default function RootLayout({
       <body>
         <Navigation />
         <main>{children}</main>
-        <footer className="bg-gray-900 text-white py-8 mt-20">
+        <footer className="bg-[#1F2937] text-white py-8 mt-20">
           <div className="max-w-7xl mx-auto px-4 text-center">
-            <p className="mb-2">📧 info@therabrake.academy | 📞 (346) 298-2988</p>
-            <p className="text-gray-400">
+            <p className="mb-2 text-[#F3F4F6]">📧 info@therabrake.academy | 📞 (346) 298-2988</p>
+            <p className="text-[#9CA3AF]">
               6120 College St. Suite D185, Beaumont, TX 77707
             </p>
-            <p className="mt-4 text-sm text-gray-400">
+            <p className="mt-4 text-sm text-[#9CA3AF]">
               © 2024 TheraBrake Academy™. All rights reserved.
             </p>
           </div>

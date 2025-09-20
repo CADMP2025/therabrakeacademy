@@ -1,7 +1,7 @@
 import { forwardRef, ButtonHTMLAttributes } from 'react'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'action' | 'ghost' | 'danger'
+  variant?: 'primary' | 'secondary' | 'accent' | 'ghost' | 'danger'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
 }
@@ -9,11 +9,11 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading, children, disabled, ...props }, ref) => {
     const variants = {
-      primary: 'bg-blue-600 hover:bg-blue-700 text-white',
-      secondary: 'bg-green-600 hover:bg-green-700 text-white',
-      action: 'bg-orange-600 hover:bg-orange-700 text-white',
-      ghost: 'bg-transparent hover:bg-gray-100 text-gray-700',
-      danger: 'bg-red-600 hover:bg-red-700 text-white',
+      primary: 'bg-[#F97316] hover:bg-[#FB923C] text-white', // Orange for CTAs
+      secondary: 'bg-[#10B981] hover:bg-[#34D399] text-white', // Green for secondary
+      accent: 'bg-[#FACC15] hover:bg-[#FBBF24] text-[#1F2937]', // Yellow accent
+      ghost: 'bg-transparent hover:bg-[#F3F4F6] text-[#1F2937]', // Ghost button
+      danger: 'bg-[#EF4444] hover:bg-red-600 text-white', // Red for alerts
     }
 
     const sizes = {

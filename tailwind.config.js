@@ -8,14 +8,33 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          DEFAULT: '#3B82F6',
-          hover: '#60A5FA',
-        },
-        secondary: {
-          DEFAULT: '#10B981',
-          light: '#34D399',
-        },
+        // TheraBrake Academy Brand Colors
+        'brand': {
+          // Primary - Focus & Trust
+          'blue': '#3B82F6',
+          'blue-soft': '#60A5FA',
+          
+          // Secondary - Growth & Progress  
+          'green': '#10B981',
+          'green-soft': '#34D399',
+          
+          // Accent - Attention & Curiosity
+          'yellow': '#FACC15',
+          'gold': '#FBBF24',
+          
+          // Action - Motivation & CTA
+          'orange': '#F97316',
+          'coral': '#FB923C',
+          
+          // Neutrals
+          'white': '#FFFFFF',
+          'gray-light': '#F3F4F6',
+          'gray-medium': '#9CA3AF',
+          'gray-dark': '#1F2937',
+          
+          // Alert
+          'red': '#EF4444',
+        }
       },
     },
   },

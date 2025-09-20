@@ -2,18 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer base {
+  :root {
+    /* TheraBrake Academy Brand Colors */
+    --color-primary: #3B82F6;
+    --color-primary-soft: #60A5FA;
+    --color-secondary: #10B981;
+    --color-secondary-soft: #34D399;
+    --color-accent: #FACC15;
+    --color-accent-warm: #FBBF24;
+    --color-action: #F97316;
+    --color-action-soft: #FB923C;
+    --color-text-primary: #1F2937;
+    --color-text-secondary: #9CA3AF;
+    --color-bg-light: #F3F4F6;
+    --color-alert: #EF4444;
+  }
+  
+  body {
+    color: #1F2937; /* Dark gray for primary text */
+    background-color: #FFFFFF;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    color: #1F2937; /* Dark gray for headings */
+  }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  /* Primary CTA Buttons */
+  .btn-primary {
+    @apply bg-[#F97316] hover:bg-[#FB923C] text-white font-medium px-6 py-2.5 rounded-lg transition-all duration-200;
+  }
+  
+  /* Secondary Buttons */
+  .btn-secondary {
+    @apply bg-[#10B981] hover:bg-[#34D399] text-white font-medium px-6 py-2.5 rounded-lg transition-all duration-200;
+  }
+  
+  /* Navigation Link Styles */
+  .nav-link {
+    @apply text-[#1F2937] hover:text-[#3B82F6] transition-colors duration-200;
+  }
+  
+  .nav-link-active {
+    @apply text-[#3B82F6] font-medium;
+  }
 }
