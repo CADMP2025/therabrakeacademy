@@ -98,8 +98,12 @@ export function AlertDialog({
     onClose()
   }
 
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title} description={description || undefined}>
+  // Build modal props conditionally to handle optional description
+  const modalProps: ModalProps = {
+    isOpen,
+    onClose,
+    title,
+    children: (
       <div className="flex justify-end gap-2 mt-6">
         <Button
           onClick={onClose}
@@ -116,6 +120,13 @@ export function AlertDialog({
           {confirmText}
         </Button>
       </div>
-    </Modal>
-  )
+    )
+  }
+  
+  // Only add description if it exists
+  if (description) {
+    modalProps.description = description
+  }
+
+  return <Modal {...modalProps} />
 }
