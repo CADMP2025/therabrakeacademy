@@ -3,12 +3,12 @@ import Link from 'next/link'
 export default function HomePage() {
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section - adjusted padding for fixed header */}
       <section className="bg-gradient-to-br from-blue-100 via-white to-green-100 py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center space-y-6">
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4">
-              Welcome to TheraBrake Academy™
+              Welcome to TheraBrake Academy<span className="text-4xl md:text-5xl align-super">™</span>
             </h1>
             <p className="text-2xl md:text-3xl font-semibold text-blue-600 mb-8">
               Pause, Process, Progress.
@@ -43,7 +43,7 @@ export default function HomePage() {
                 href="/courses#professional" 
                 className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium text-lg"
               >
-                Explore our Professional Development Catalog
+                Explore Professional Development Catalog
                 <span className="ml-2">→</span>
               </Link>
               <p className="text-sm text-gray-600 mt-3">
@@ -119,7 +119,7 @@ export default function HomePage() {
                 href="/courses#personal" 
                 className="inline-flex items-center text-green-600 hover:text-green-700 font-medium text-lg"
               >
-                Visit our Personal Development Catalog
+                Visit Personal Development Catalog
                 <span className="ml-2">→</span>
               </Link>
               <p className="text-sm text-gray-600 mt-3">
@@ -130,6 +130,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Rest of the homepage content remains the same... */}
       {/* Why Choose Section */}
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
