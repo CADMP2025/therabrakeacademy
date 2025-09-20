@@ -1,7 +1,6 @@
 'use client'
 
-import { useState } from 'react'
-import { Mail, Phone, MapPin, Send, MessageCircle } from 'lucide-react'
+import { useState, FormEvent, ChangeEvent } from 'react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -11,13 +10,12 @@ export default function ContactPage() {
     message: ''
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // Handle form submission here
     console.log('Form submitted:', formData)
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -25,21 +23,21 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-primary/5">
+    <div className="min-h-screen bg-gradient-to-b from-white to-blue-50">
       {/* Hero Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 to-secondary/10">
+      <section className="py-20 px-4 bg-gradient-to-br from-blue-100 to-green-100">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">Let's Connect & Move Forward Together ✨</h1>
-          <p className="text-lg text-neutral-medium max-w-3xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             At <strong>TheraBrake Academy™</strong>, every question, every story, and every step forward matters. 
             Whether you're a professional seeking guidance on CEU courses, an individual starting your journey of 
             healing, or simply curious about how we can support your growth—<strong>we're here to listen and 
             respond with care</strong>.
           </p>
-          <p className="text-lg mt-4 text-neutral-dark">
+          <p className="text-lg mt-4 text-gray-800">
             📩 Reach out to us anytime. Your message isn't just an inquiry—it's the beginning of progress.
           </p>
-          <p className="text-lg mt-4 text-neutral-medium">
+          <p className="text-lg mt-4 text-gray-600">
             Together, let's turn challenges into opportunities and take the next step toward your goals.
           </p>
         </div>
@@ -55,10 +53,10 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <div className="flex items-start gap-4">
-                    <Mail className="w-6 h-6 text-primary mt-1" />
+                    <span className="text-2xl">📧</span>
                     <div>
                       <h3 className="font-bold mb-1">Email</h3>
-                      <a href="mailto:info@therabrake.academy" className="text-primary hover:underline">
+                      <a href="mailto:info@therabrake.academy" className="text-blue-600 hover:underline">
                         info@therabrake.academy
                       </a>
                     </div>
@@ -67,10 +65,10 @@ export default function ContactPage() {
 
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <div className="flex items-start gap-4">
-                    <Phone className="w-6 h-6 text-primary mt-1" />
+                    <span className="text-2xl">📞</span>
                     <div>
                       <h3 className="font-bold mb-1">Phone</h3>
-                      <a href="tel:3462982988" className="text-primary hover:underline">
+                      <a href="tel:3462982988" className="text-blue-600 hover:underline">
                         (346) 298-2988
                       </a>
                     </div>
@@ -79,10 +77,10 @@ export default function ContactPage() {
 
                 <div className="bg-white rounded-lg shadow-md p-6">
                   <div className="flex items-start gap-4">
-                    <MapPin className="w-6 h-6 text-primary mt-1" />
+                    <span className="text-2xl">📍</span>
                     <div>
                       <h3 className="font-bold mb-1">Address</h3>
-                      <p className="text-neutral-medium">
+                      <p className="text-gray-600">
                         6120 College St. Suite D185<br />
                         Beaumont, TX 77707
                       </p>
@@ -90,9 +88,9 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="bg-gradient-to-r from-primary to-secondary rounded-lg p-6 text-white">
-                  <MessageCircle className="w-8 h-8 mb-3" />
-                  <h3 className="font-bold text-xl mb-2">Office Hours</h3>
+                <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-lg p-6 text-white">
+                  <span className="text-3xl">💬</span>
+                  <h3 className="font-bold text-xl mb-2 mt-3">Office Hours</h3>
                   <p>Monday - Friday: 9:00 AM - 5:00 PM CST</p>
                   <p>Saturday - Sunday: By Appointment</p>
                 </div>
@@ -114,7 +112,7 @@ export default function ContactPage() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="John Doe"
                   />
                 </div>
@@ -130,7 +128,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -145,7 +143,7 @@ export default function ContactPage() {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">Select a subject...</option>
                     <option value="ce-courses">CE Courses Information</option>
@@ -168,16 +166,16 @@ export default function ContactPage() {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Tell us how we can help..."
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full bg-primary hover:bg-primary-hover text-white font-medium py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 rounded-lg transition-all duration-200 flex items-center justify-center gap-2"
                 >
-                  <Send className="w-5 h-5" />
+                  <span>📤</span>
                   Send Message
                 </button>
               </form>
