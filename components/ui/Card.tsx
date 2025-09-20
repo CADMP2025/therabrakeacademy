@@ -1,33 +1,55 @@
 import React from 'react'
+import { cn } from '@/lib/utils'
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  hover?: boolean
+export interface CardProps {
+  children: React.ReactNode
+  className?: string
 }
 
-export const Card: React.FC<CardProps> = ({ 
-  children, 
-  className = '', 
-  hover = false,
-  ...props 
-}) => {
+export function Card({ children, className }: CardProps) {
   return (
-    <div 
-      className={`bg-white rounded-xl shadow-md p-6 ${hover ? 'hover:shadow-xl transition-shadow' : ''} ${className}`}
-      {...props}
-    >
+    <div className={cn('bg-white rounded-xl shadow-md', className)}>
       {children}
     </div>
   )
 }
 
-export const CardHeader: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className = '' }) => (
-  <div className={`pb-4 ${className}`}>{children}</div>
-)
+export function CardHeader({ children, className }: CardProps) {
+  return (
+    <div className={cn('p-6 border-b border-gray-200', className)}>
+      {children}
+    </div>
+  )
+}
 
-export const CardTitle: React.FC<React.HTMLAttributes<HTMLHeadingElement>> = ({ children, className = '' }) => (
-  <h3 className={`text-2xl font-semibold ${className}`}>{children}</h3>
-)
+export function CardTitle({ children, className }: CardProps) {
+  return (
+    <h3 className={cn('text-lg font-semibold', className)}>
+      {children}
+    </h3>
+  )
+}
 
-export const CardContent: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({ children, className = '' }) => (
-  <div className={className}>{children}</div>
-)
+export function CardDescription({ children, className }: CardProps) {
+  return (
+    <p className={cn('mt-1 text-sm text-gray-500', className)}>
+      {children}
+    </p>
+  )
+}
+
+export function CardContent({ children, className }: CardProps) {
+  return (
+    <div className={cn('p-6', className)}>
+      {children}
+    </div>
+  )
+}
+
+export function CardFooter({ children, className }: CardProps) {
+  return (
+    <div className={cn('px-6 py-4 bg-gray-50 border-t border-gray-200 rounded-b-xl', className)}>
+      {children}
+    </div>
+  )
+}

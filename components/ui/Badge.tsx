@@ -1,122 +1,72 @@
-'use client'
-
 import React from 'react'
+import { cn } from '@/lib/utils'
 import { X } from 'lucide-react'
-import { cva, type VariantProps } from 'class-variance-authority'
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
 
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-
-const badgeVariants = cva(
-  'inline-flex items-center rounded-full px-3 py-1 text-sm font-medium transition-colors',
-  {
-    variants: {
-      variant: {
-        primary: 'bg-primary/10 text-primary',
-        secondary: 'bg-secondary/10 text-secondary',
-        success: 'bg-secondary/10 text-secondary',
-        warning: 'bg-accent/10 text-accent',
-        danger: 'bg-alert/10 text-alert',
-        info: 'bg-primary/10 text-primary',
-        outline: 'border border-neutral-light text-neutral-dark',
-        solid: 'bg-primary text-white',
-      },
-      size: {
-        sm: 'px-2 py-0.5 text-xs',
-        md: 'px-3 py-1 text-sm',
-        lg: 'px-4 py-1.5 text-base',
-      },
-    },
-    defaultVariants: {
-      variant: 'primary',
-      size: 'md',
-    },
-  }
-)
-
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof badgeVariants> {
+export interface BadgeProps {
+  children: React.ReactNode
+  variant?: 'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'solid'
+  className?: string
   removable?: boolean
   onRemove?: () => void
-  leftIcon?: React.ReactNode
-  rightIcon?: React.ReactNode
 }
 
-const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ 
-    className, 
-    variant, 
-    size,
-    removable,
-    onRemove,
-    leftIcon,
-    rightIcon,
-    children,
-    ...props 
-  }, ref) => {
-    return (
-      <span
-        ref={ref}
-        className={cn(badgeVariants({ variant, size, className }))}
-        {...props}
-      >
-        {leftIcon && <span className="mr-1">{leftIcon}</span>}
-        {children}
-        {rightIcon && <span className="ml-1">{rightIcon}</span>}
-        {removable && (
-          <button
-            onClick={onRemove}
-            className="ml-1 hover:opacity-70 transition-opacity"
-            aria-label="Remove"
-          >
-            <X className="h-3 w-3" />
-          </button>
-        )}
-      </span>
-    )
+export function Badge({ 
+  children, 
+  variant = 'default', 
+  className,
+  removable,
+  onRemove
+}: BadgeProps) {
+  const variants = {
+    default: 'bg-gray-100 text-gray-800',
+    primary: 'bg-primary/10 text-primary',
+    secondary: 'bg-secondary/10 text-secondary',
+    success: 'bg-green-100 text-green-800',
+    warning: 'bg-yellow-100 text-yellow-800',
+    danger: 'bg-red-100 text-red-800',
+    solid: 'bg-primary text-white'
   }
-)
-Badge.displayName = 'Badge'
 
-// CE Hours Badge
-interface CEBadgeProps {
-  hours: number
-  className?: string
+  return (
+    <span
+      className={cn(
+        'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium',
+        variants[variant],
+        className
+      )}
+    >
+      {children}
+      {removable && (
+        <button
+          onClick={onRemove}
+          className="ml-1 hover:opacity-75"
+          aria-label="Remove"
+        >
+          <X className="w-3 h-3" />
+        </button>
+      )}
+    </span>
+  )
 }
 
-const CEBadge: React.FC<CEBadgeProps> = ({ hours, className }) => {
+export function CEBadge({ hours }: { hours: number }) {
   return (
-    <Badge variant="solid" className={cn('bg-secondary', className)}>
+    <Badge variant="primary" className="font-semibold">
       {hours} CE Hours
     </Badge>
   )
 }
 
-// Status Badge
-interface StatusBadgeProps {
-  status: 'active' | 'completed' | 'pending' | 'cancelled'
-  className?: string
-}
-
-const StatusBadge: React.FC<StatusBadgeProps> = ({ status, className }) => {
-  const statusConfig = {
-    active: { variant: 'success' as const, label: 'Active' },
-    completed: { variant: 'primary' as const, label: 'Completed' },
-    pending: { variant: 'warning' as const, label: 'Pending' },
-    cancelled: { variant: 'danger' as const, label: 'Cancelled' },
-  }
-
-  const config = statusConfig[status]
+export function StatusBadge({ status }: { status: 'active' | 'completed' | 'pending' }) {
+  const variants = {
+    active: 'success',
+    completed: 'primary',
+    pending: 'warning'
+  } as const
 
   return (
-    <Badge variant={config.variant} className={className}>
-      {config.label}
+    <Badge variant={variants[status]}>
+      {status.charAt(0).toUpperCase() + status.slice(1)}
     </Badge>
   )
 }
-
-export { Badge, badgeVariants, CEBadge, StatusBadge }

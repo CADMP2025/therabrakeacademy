@@ -1,241 +1,247 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { 
-  Menu, 
-  X, 
-  ChevronDown, 
-  User, 
-  LogOut, 
-  Settings,
-  BookOpen,
-  Award,
-  Bell,
-  Search
-} from 'lucide-react'
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import Image from 'next/image'
+import { usePathname, useRouter } from 'next/navigation'
+import { Menu, X, User, BookOpen, Award, LogOut } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
-function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
-
-interface NavigationProps {
+export interface NavigationProps {
   user?: {
     name: string
     email: string
-    avatar?: string
     role: 'student' | 'instructor' | 'admin'
-  }
+  } | null
 }
 
-const Navigation: React.FC<NavigationProps> = ({ user }) => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
+export default function Navigation({ user }: NavigationProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  useEffect(() => {
-    setMobileMenuOpen(false)
-    setUserMenuOpen(false)
-  }, [pathname])
-
-  const navLinks = [
-    { href: '/courses', label: 'Courses' },
-    { href: '/pricing', label: 'Pricing' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
-  ]
-
-  const userMenuItems = [
-    { icon: User, label: 'Profile', href: '/profile' },
-    { icon: BookOpen, label: 'My Courses', href: '/dashboard/courses' },
-    { icon: Award, label: 'Certificates', href: '/dashboard/certificates' },
-    { icon: Settings, label: 'Settings', href: '/settings' },
-  ]
+  // Don't show navigation on auth pages
+  const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/forgot-password'
+  if (isAuthPage) return null
 
   return (
-    <nav className={cn(
-      'fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300',
-      scrolled ? 'shadow-lg' : 'shadow-md'
-    )}>
-      <div className="container-custom">
+    <header className="bg-white shadow-md fixed top-0 w-full z-50">
+      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">T</span>
-            </div>
-            <span className="text-2xl font-bold gradient-text hidden sm:inline">
-              TheraBrake Academy™
-            </span>
-            <span className="text-2xl font-bold gradient-text sm:hidden">
-              TheraBrake™
-            </span>
-          </Link>
+          {/* Logo Section */}
+          <div className="flex items-center">
+            <Link href="/" className="flex items-center space-x-3">
+              <div className="text-2xl font-bold text-primary">
+                TheraBrake Academy™
+              </div>
+            </Link>
+          </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={cn(
-                  'text-neutral-dark hover:text-primary transition-colors font-medium',
-                  pathname === link.href && 'text-primary'
-                )}
-              >
-                {link.label}
-              </Link>
-            ))}
-
-            {/* Search */}
-            <button className="text-neutral-medium hover:text-primary transition-colors">
-              <Search className="w-5 h-5" />
-            </button>
-
-            {/* Notifications */}
+            <Link 
+              href="/courses" 
+              className={`text-neutral-dark hover:text-primary transition-colors ${
+                pathname === '/courses' ? 'text-primary font-semibold' : ''
+              }`}
+            >
+              <span className="flex items-center gap-1">
+                <BookOpen className="w-4 h-4" />
+                Courses
+              </span>
+            </Link>
+            
             {user && (
-              <button className="text-neutral-medium hover:text-primary transition-colors relative">
-                <Bell className="w-5 h-5" />
-                <span className="absolute -top-1 -right-1 w-2 h-2 bg-alert rounded-full" />
-              </button>
-            )}
-
-            {/* User Menu or Login */}
-            {user ? (
-              <div className="relative">
-                <button
-                  onClick={() => setUserMenuOpen(!userMenuOpen)}
-                  className="flex items-center space-x-2 text-neutral-dark hover:text-primary transition-colors"
+              <>
+                <Link 
+                  href="/dashboard" 
+                  className={`text-neutral-dark hover:text-primary transition-colors ${
+                    pathname === '/dashboard' ? 'text-primary font-semibold' : ''
+                  }`}
                 >
-                  <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                    {user.avatar ? (
-                      <img src={user.avatar} alt={user.name} className="w-full h-full rounded-full" />
-                    ) : (
-                      <span className="text-white font-medium">
-                        {user.name.charAt(0).toUpperCase()}
-                      </span>
-                    )}
-                  </div>
-                  <span className="font-medium hidden lg:inline">{user.name}</span>
-                  <ChevronDown className="w-4 h-4" />
-                </button>
+                  Dashboard
+                </Link>
+                <Link 
+                  href="/certificates" 
+                  className={`text-neutral-dark hover:text-primary transition-colors ${
+                    pathname === '/certificates' ? 'text-primary font-semibold' : ''
+                  }`}
+                >
+                  <span className="flex items-center gap-1">
+                    <Award className="w-4 h-4" />
+                    Certificates
+                  </span>
+                </Link>
+              </>
+            )}
+            
+            <Link 
+              href="/about" 
+              className={`text-neutral-dark hover:text-primary transition-colors ${
+                pathname === '/about' ? 'text-primary font-semibold' : ''
+              }`}
+            >
+              About
+            </Link>
+            
+            <Link 
+              href="/contact" 
+              className={`text-neutral-dark hover:text-primary transition-colors ${
+                pathname === '/contact' ? 'text-primary font-semibold' : ''
+              }`}
+            >
+              Contact
+            </Link>
+          </div>
 
-                {/* Dropdown Menu */}
-                {userMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-neutral-light py-2">
-                    <div className="px-4 py-2 border-b border-neutral-light">
-                      <p className="font-medium text-neutral-dark">{user.name}</p>
-                      <p className="text-sm text-neutral-medium">{user.email}</p>
-                      <span className={cn(
-                        'inline-block mt-1 px-2 py-1 text-xs rounded-full',
-                        user.role === 'admin' && 'bg-primary/10 text-primary',
-                        user.role === 'instructor' && 'bg-secondary/10 text-secondary',
-                        user.role === 'student' && 'bg-accent/10 text-accent'
-                      )}>
-                        {user.role.charAt(0).toUpperCase() + user.role.slice(1)}
-                      </span>
-                    </div>
-                    {userMenuItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-light transition-colors"
-                      >
-                        <item.icon className="w-4 h-4 text-neutral-medium" />
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
-                    <div className="border-t border-neutral-light mt-2 pt-2">
-                      <button className="flex items-center space-x-2 px-4 py-2 hover:bg-neutral-light transition-colors w-full text-left text-alert">
-                        <LogOut className="w-4 h-4" />
-                        <span>Sign Out</span>
-                      </button>
-                    </div>
-                  </div>
-                )}
+          {/* User Actions */}
+          <div className="hidden md:flex items-center space-x-4">
+            {user ? (
+              <div className="flex items-center space-x-4">
+                <Link href="/profile" className="text-neutral-dark hover:text-primary">
+                  <User className="w-5 h-5" />
+                </Link>
+                <span className="text-sm text-neutral-medium">
+                  {user.name}
+                </span>
+                <Button 
+                  onClick={() => router.push('/login')} 
+                  variant="ghost" 
+                  size="sm"
+                >
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Sign Out
+                </Button>
               </div>
             ) : (
-              <Link href="/login" className="btn-primary">
-                Login
-              </Link>
+              <div className="flex items-center space-x-2">
+                <Link href="/login">
+                  <Button variant="ghost" size="sm">Sign In</Button>
+                </Link>
+                <Link href="/register">
+                  <Button size="sm">Get Started</Button>
+                </Link>
+              </div>
             )}
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden text-neutral-dark"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Mobile Menu Toggle */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-neutral-dark hover:text-primary"
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-white shadow-lg animate-slide-down">
-            <div className="py-4">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    'block px-4 py-3 hover:bg-neutral-light transition-colors',
-                    pathname === link.href && 'bg-primary/10 text-primary font-medium'
-                  )}
-                >
-                  {link.label}
-                </Link>
-              ))}
-
-              {user ? (
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-gray-200 py-4">
+            <div className="space-y-4">
+              <Link 
+                href="/courses" 
+                className="block text-neutral-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <span className="flex items-center gap-2">
+                  <BookOpen className="w-4 h-4" />
+                  Courses
+                </span>
+              </Link>
+              
+              {user && (
                 <>
-                  <div className="border-t border-neutral-light mt-4 pt-4">
-                    <div className="px-4 py-2">
-                      <p className="font-medium text-neutral-dark">{user.name}</p>
-                      <p className="text-sm text-neutral-medium">{user.email}</p>
-                    </div>
-                    {userMenuItems.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className="flex items-center space-x-2 px-4 py-3 hover:bg-neutral-light transition-colors"
-                      >
-                        <item.icon className="w-4 h-4 text-neutral-medium" />
-                        <span>{item.label}</span>
-                      </Link>
-                    ))}
-                    <button className="flex items-center space-x-2 px-4 py-3 hover:bg-neutral-light transition-colors w-full text-left text-alert">
-                      <LogOut className="w-4 h-4" />
-                      <span>Sign Out</span>
+                  <Link 
+                    href="/dashboard" 
+                    className="block text-neutral-dark hover:text-primary transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Dashboard
+                  </Link>
+                  <Link 
+                    href="/certificates" 
+                    className="block text-neutral-dark hover:text-primary transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span className="flex items-center gap-2">
+                      <Award className="w-4 h-4" />
+                      My Certificates
+                    </span>
+                  </Link>
+                </>
+              )}
+              
+              <Link 
+                href="/about" 
+                className="block text-neutral-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                About
+              </Link>
+              
+              <Link 
+                href="/contact" 
+                className="block text-neutral-dark hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              
+              <div className="pt-4 border-t border-gray-200">
+                {user ? (
+                  <div className="space-y-2">
+                    <Link 
+                      href="/profile" 
+                      className="block text-neutral-dark hover:text-primary"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <span className="flex items-center gap-2">
+                        <User className="w-4 h-4" />
+                        Profile
+                      </span>
+                    </Link>
+                    <button 
+                      onClick={() => {
+                        router.push('/login')
+                        setIsMenuOpen(false)
+                      }}
+                      className="w-full text-left text-neutral-dark hover:text-primary"
+                    >
+                      <span className="flex items-center gap-2">
+                        <LogOut className="w-4 h-4" />
+                        Sign Out
+                      </span>
                     </button>
                   </div>
-                </>
-              ) : (
-                <div className="px-4 pt-4">
-                  <Link href="/login" className="btn-primary w-full text-center">
-                    Login
-                  </Link>
-                </div>
-              )}
+                ) : (
+                  <div className="space-y-2">
+                    <Link 
+                      href="/login" 
+                      className="block"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Button variant="ghost" className="w-full">Sign In</Button>
+                    </Link>
+                    <Link 
+                      href="/register" 
+                      className="block"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      <Button className="w-full">Get Started</Button>
+                    </Link>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         )}
-      </div>
-    </nav>
+      </nav>
+    </header>
   )
 }
 
-export default Navigation
+// Export as named export for compatibility
+export { Navigation }
