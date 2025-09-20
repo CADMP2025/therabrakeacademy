@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { Menu, X, User, BookOpen, Award, LogOut } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 
 export interface NavigationProps {
   user?: {
@@ -20,7 +19,6 @@ export default function Navigation({ user }: NavigationProps) {
   const pathname = usePathname()
   const router = useRouter()
 
-  // Don't show navigation on auth pages
   const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/forgot-password'
   if (isAuthPage) return null
 
@@ -28,7 +26,6 @@ export default function Navigation({ user }: NavigationProps) {
     <header className="bg-white shadow-md fixed top-0 w-full z-50">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo Section */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-3">
               <div className="text-2xl font-bold text-primary">
@@ -37,7 +34,6 @@ export default function Navigation({ user }: NavigationProps) {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             <Link 
               href="/courses" 
@@ -94,7 +90,6 @@ export default function Navigation({ user }: NavigationProps) {
             </Link>
           </div>
 
-          {/* User Actions */}
           <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <div className="flex items-center space-x-4">
@@ -125,7 +120,6 @@ export default function Navigation({ user }: NavigationProps) {
             )}
           </div>
 
-          {/* Mobile Menu Toggle */}
           <div className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -137,7 +131,6 @@ export default function Navigation({ user }: NavigationProps) {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 py-4">
             <div className="space-y-4">
@@ -243,5 +236,4 @@ export default function Navigation({ user }: NavigationProps) {
   )
 }
 
-// Export as named export for compatibility
 export { Navigation }

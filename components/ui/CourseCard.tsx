@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Clock, Award, User, ArrowRight } from 'lucide-react'
+import { User, ArrowRight } from 'lucide-react'
 import { Card, CardContent, CardFooter } from './Card'
 import { Badge, CEBadge } from './Badge'
 import { ProgressBar } from './ProgressBar'
@@ -13,7 +13,6 @@ export interface CourseCardProps {
   price: number
   ceHours?: number
   category: string
-  thumbnail?: string
   enrolled?: boolean
   progress?: number
 }
@@ -26,13 +25,11 @@ export function CourseCard({
   price,
   ceHours,
   category,
-  thumbnail,
   enrolled,
   progress
 }: CourseCardProps) {
   return (
     <Card className="hover:shadow-xl transition-shadow duration-200 overflow-hidden">
-      {/* Thumbnail or gradient placeholder */}
       <div className="h-48 bg-gradient-to-br from-primary to-primary-hover"></div>
       
       <CardContent className="space-y-4">

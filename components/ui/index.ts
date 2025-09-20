@@ -1,5 +1,5 @@
 // Core Components
-export { Button } from './button'
+export { Button } from './Button'
 export { default as Navigation } from './Navigation'
 export type { NavigationProps } from './Navigation'
 

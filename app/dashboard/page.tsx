@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { BookOpen, Award, Clock, TrendingUp, Calendar, User } from 'lucide-react'
+import { BookOpen, Award, Clock, TrendingUp, Calendar } from 'lucide-react'
 
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null)
@@ -41,9 +41,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Dashboard Content */}
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        {/* Welcome Section */}
         <div className="px-4 py-6 sm:px-0">
           <div className="bg-white rounded-lg shadow p-6 mb-6">
             <h1 className="text-3xl font-bold text-neutral-dark mb-2">
@@ -54,7 +52,6 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {stats.map((stat, index) => (
               <div key={index} className="bg-white rounded-lg shadow p-6">
@@ -67,9 +64,7 @@ export default function DashboardPage() {
             ))}
           </div>
 
-          {/* Content Sections */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Recent Activity */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow">
                 <div className="p-6 border-b border-gray-200">
@@ -83,7 +78,6 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Upcoming Deadlines */}
             <div>
               <div className="bg-white rounded-lg shadow">
                 <div className="p-6 border-b border-gray-200">
@@ -99,7 +93,6 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Quick Actions */}
               <div className="bg-white rounded-lg shadow mt-6">
                 <div className="p-6 border-b border-gray-200">
                   <h2 className="text-xl font-bold text-neutral-dark">Quick Actions</h2>

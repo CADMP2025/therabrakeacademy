@@ -113,7 +113,7 @@ export interface StepProgressProps {
   variant?: 'linear' | 'circular'
 }
 
-export function StepProgress({ steps, currentStep, variant = 'linear' }: StepProgressProps) {
+export function StepProgress({ steps, currentStep, /*variant = 'linear'*/ }: StepProgressProps) {
   return (
     <div className="space-y-4">
       {steps.map((step, index) => (

@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { X } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { Button } from './button'
+import { Button } from './Button'
 
 export interface ModalProps {
   isOpen: boolean
@@ -15,7 +15,6 @@ export interface ModalProps {
 }
 
 export function Modal({ isOpen, onClose, title, description, children, className }: ModalProps) {
-  // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -25,7 +24,6 @@ export function Modal({ isOpen, onClose, title, description, children, className
     
     if (isOpen) {
       document.addEventListener('keydown', handleEscape)
-      // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden'
     }
     
@@ -95,15 +93,13 @@ export function AlertDialog({
   cancelText = 'Cancel',
   variant = 'default'
 }: AlertDialogProps) {
-  if (!isOpen) return null
-
   const handleConfirm = () => {
     onConfirm()
     onClose()
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title} description={description}>
+    <Modal isOpen={isOpen} onClose={onClose} title={title} description={description || undefined}>
       <div className="flex justify-end gap-2 mt-6">
         <Button
           onClick={onClose}

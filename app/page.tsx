@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight, Award, Brain, Users, Clock, CheckCircle } from 'lucide-react'
+import { ArrowRight, Award, Brain, Users, Clock } from 'lucide-react'
 
 export default function HomePage() {
   const features = [
