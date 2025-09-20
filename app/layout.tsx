@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 import { AuthProvider } from '@/contexts/AuthContext'
+import { Navigation } from '@/components/layout/Navigation'
 import './globals.css'
 
 const inter = Inter({ 
@@ -30,7 +31,8 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className={inter.className}>
         <AuthProvider>
-          {children}
+          <Navigation />
+          <main>{children}</main>
         </AuthProvider>
       </body>
     </html>

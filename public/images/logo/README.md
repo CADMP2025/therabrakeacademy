@@ -1,8 +1,10 @@
-# TheraBrake Academy Logo
+# Logo Placement
 
-Place your logo.png file in this directory.
+Please place your TheraBrake Academy logo here as `logo.png`
 
 The logo should be:
-- Format: PNG with transparent background
-- Recommended size: 200x200px or similar square ratio
-- File name: logo.png
+- PNG format with transparent background
+- Approximately 200x200px or similar square aspect ratio
+- High resolution for clarity
+
+File should be named: `logo.png`
