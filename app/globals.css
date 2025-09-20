@@ -5,47 +5,71 @@
 @layer base {
   :root {
     /* TheraBrake Academy Brand Colors */
-    --color-primary: #3B82F6;
-    --color-primary-soft: #60A5FA;
-    --color-secondary: #10B981;
-    --color-secondary-soft: #34D399;
-    --color-accent: #FACC15;
-    --color-accent-warm: #FBBF24;
-    --color-action: #F97316;
-    --color-action-soft: #FB923C;
-    --color-text-primary: #1F2937;
-    --color-text-secondary: #9CA3AF;
-    --color-bg-light: #F3F4F6;
-    --color-alert: #EF4444;
+    --color-primary: 59 130 246; /* #3B82F6 */
+    --color-primary-hover: 96 165 250; /* #60A5FA */
+    --color-secondary: 16 185 129; /* #10B981 */
+    --color-secondary-light: 52 211 153; /* #34D399 */
+    --color-accent: 250 204 21; /* #FACC15 */
+    --color-accent-hover: 251 191 36; /* #FBBF24 */
+    --color-action: 249 115 22; /* #F97316 */
+    --color-action-light: 251 146 60; /* #FB923C */
+    --color-alert: 239 68 68; /* #EF4444 */
+    --color-neutral-white: 255 255 255; /* #FFFFFF */
+    --color-neutral-light: 243 244 246; /* #F3F4F6 */
+    --color-neutral-medium: 156 163 175; /* #9CA3AF */
+    --color-neutral-dark: 31 41 55; /* #1F2937 */
   }
-  
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
   body {
-    color: #1F2937; /* Dark gray for primary text */
-    background-color: #FFFFFF;
+    @apply bg-white text-neutral-dark;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
   h1, h2, h3, h4, h5, h6 {
-    color: #1F2937; /* Dark gray for headings */
+    @apply font-heading;
   }
 }
 
 @layer components {
-  /* Primary CTA Buttons */
   .btn-primary {
-    @apply bg-[#F97316] hover:bg-[#FB923C] text-white font-medium px-6 py-2.5 rounded-lg transition-all duration-200;
+    @apply bg-primary text-white hover:bg-primary-hover px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg;
   }
   
-  /* Secondary Buttons */
   .btn-secondary {
-    @apply bg-[#10B981] hover:bg-[#34D399] text-white font-medium px-6 py-2.5 rounded-lg transition-all duration-200;
+    @apply bg-secondary text-white hover:bg-secondary-light px-6 py-3 rounded-lg font-medium transition-all duration-200;
   }
   
-  /* Navigation Link Styles */
-  .nav-link {
-    @apply text-[#1F2937] hover:text-[#3B82F6] transition-colors duration-200;
+  .btn-action {
+    @apply bg-action text-white hover:bg-action-light px-6 py-3 rounded-lg font-medium transition-all duration-200;
   }
   
-  .nav-link-active {
-    @apply text-[#3B82F6] font-medium;
+  .card {
+    @apply bg-white rounded-xl shadow-md p-6 border border-neutral-light hover:shadow-xl transition-shadow duration-200;
   }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-neutral-light;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-neutral-medium rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-neutral-dark;
 }
