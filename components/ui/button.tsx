@@ -2,7 +2,7 @@ import { forwardRef, ButtonHTMLAttributes } from 'react'
 import { cn } from '@/lib/utils'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'action' | 'ghost' | 'danger' | 'outline'
+  variant?: 'primary' | 'secondary' | 'accent' | 'ghost' | 'danger' | 'outline'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
 }
@@ -10,12 +10,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading, children, disabled, ...props }, ref) => {
     const variants = {
-      primary: 'bg-primary hover:bg-primary-hover text-white',
-      secondary: 'bg-secondary hover:bg-secondary-light text-white',
-      action: 'bg-action hover:bg-action-light text-white',
-      ghost: 'bg-transparent hover:bg-gray-100 text-gray-700',
-      danger: 'bg-alert hover:bg-red-600 text-white',
-      outline: 'border border-gray-300 bg-white hover:bg-gray-50 text-gray-700',
+      primary: 'bg-[#F97316] hover:bg-[#FB923C] text-white', // Orange CTA
+      secondary: 'bg-[#10B981] hover:bg-[#34D399] text-white', // Green
+      accent: 'bg-[#FACC15] hover:bg-[#FBBF24] text-[#1F2937]', // Yellow
+      ghost: 'bg-transparent hover:bg-[#F3F4F6] text-[#1F2937]', // Gray
+      danger: 'bg-[#EF4444] hover:bg-red-600 text-white', // Red alert
+      outline: 'border border-[#9CA3AF] bg-white hover:bg-[#F3F4F6] text-[#1F2937]',
     }
 
     const sizes = {

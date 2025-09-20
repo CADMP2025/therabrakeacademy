@@ -4,68 +4,127 @@
 
 @layer base {
   :root {
-    /* TheraBrake Academy Brand Colors */
-    --color-primary: 59 130 246;
-    --color-primary-hover: 96 165 250;
-    --color-secondary: 16 185 129;
-    --color-secondary-light: 52 211 153;
-    --color-accent: 250 204 21;
-    --color-accent-hover: 251 191 36;
-    --color-action: 249 115 22;
-    --color-action-light: 251 146 60;
-    --color-alert: 239 68 68;
-    --color-neutral-white: 255 255 255;
-    --color-neutral-light: 243 244 246;
-    --color-neutral-medium: 156 163 175;
-    --color-neutral-dark: 31 41 55;
+    /* TheraBrake Academy Brand Colors - Exact Values */
+    /* Primary - Focus & Trust */
+    --color-primary: 59 130 246; /* #3B82F6 */
+    --color-primary-soft: 96 165 250; /* #60A5FA */
+    
+    /* Secondary - Growth & Progress */
+    --color-secondary: 16 185 129; /* #10B981 */
+    --color-secondary-soft: 52 211 153; /* #34D399 */
+    
+    /* Accent - Attention & Curiosity */
+    --color-accent: 250 204 21; /* #FACC15 */
+    --color-accent-warm: 251 191 36; /* #FBBF24 */
+    
+    /* Action - Motivation & CTA */
+    --color-action: 249 115 22; /* #F97316 */
+    --color-action-soft: 251 146 60; /* #FB923C */
+    
+    /* Alert - Urgency */
+    --color-alert: 239 68 68; /* #EF4444 */
+    
+    /* Neutrals - Clarity & Balance */
+    --color-white: 255 255 255; /* #FFFFFF */
+    --color-gray-light: 243 244 246; /* #F3F4F6 */
+    --color-gray-medium: 156 163 175; /* #9CA3AF */
+    --color-gray-dark: 31 41 55; /* #1F2937 */
   }
   
   body {
-    @apply bg-white text-neutral-dark antialiased;
+    @apply bg-white text-gray-dark antialiased;
+    color: #1F2937; /* Primary text color */
   }
   
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading;
+    @apply font-heading text-gray-dark;
+  }
+  
+  p {
+    @apply text-gray-dark;
+  }
+  
+  .text-secondary {
+    color: #9CA3AF; /* Secondary text */
   }
 }
 
 @layer components {
+  /* Navigation Header */
+  .nav-header {
+    @apply bg-primary; /* Blue #3B82F6 */
+  }
+  
+  /* Primary CTA Buttons */
   .btn-primary {
-    @apply bg-primary text-white hover:bg-primary-hover px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg;
+    @apply bg-action text-white hover:bg-action-soft px-6 py-3 rounded-lg font-medium transition-all duration-200 shadow-md hover:shadow-lg;
+    background-color: #F97316;
   }
   
+  .btn-primary:hover {
+    background-color: #FB923C;
+  }
+  
+  /* Secondary Buttons */
   .btn-secondary {
-    @apply bg-secondary text-white hover:bg-secondary-light px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    @apply bg-secondary text-white hover:bg-secondary-soft px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    background-color: #10B981;
   }
   
-  .btn-action {
-    @apply bg-action text-white hover:bg-action-light px-6 py-3 rounded-lg font-medium transition-all duration-200;
+  .btn-secondary:hover {
+    background-color: #34D399;
   }
   
+  /* Accent/Highlight Buttons */
+  .btn-accent {
+    @apply bg-accent text-gray-dark hover:bg-accent-warm px-6 py-3 rounded-lg font-medium transition-all duration-200;
+    background-color: #FACC15;
+  }
+  
+  .btn-accent:hover {
+    background-color: #FBBF24;
+  }
+  
+  /* Cards with light gray background */
   .card {
-    @apply bg-white rounded-xl shadow-md p-6 border border-neutral-light hover:shadow-xl transition-shadow duration-200;
+    @apply bg-gray-light rounded-xl shadow-md p-6 hover:shadow-xl transition-shadow duration-200;
+    background-color: #F3F4F6;
   }
   
-  .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  /* Section backgrounds */
+  .section-light {
+    background-color: #F3F4F6; /* Light gray for sections */
+  }
+  
+  /* Progress bars */
+  .progress-complete {
+    background-color: #34D399; /* Green for completed */
+  }
+  
+  .progress-active {
+    background-color: #FBBF24; /* Yellow for in progress */
+  }
+  
+  .progress-overdue {
+    background-color: #EF4444; /* Red for overdue */
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar using brand colors */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #F3F4F6;
+  background: #F3F4F6; /* Light gray */
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #9CA3AF;
+  background: #9CA3AF; /* Medium gray */
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1F2937;
+  background: #1F2937; /* Dark gray */
 }
