@@ -1,7 +1,8 @@
 import { forwardRef, ButtonHTMLAttributes } from 'react'
+import { cn } from '@/lib/utils'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'accent' | 'ghost' | 'danger'
+  variant?: 'primary' | 'secondary' | 'action' | 'ghost' | 'danger' | 'outline'
   size?: 'sm' | 'md' | 'lg'
   isLoading?: boolean
 }
@@ -9,11 +10,12 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = 'primary', size = 'md', isLoading, children, disabled, ...props }, ref) => {
     const variants = {
-      primary: 'bg-[#F97316] hover:bg-[#FB923C] text-white', // Orange for CTAs
-      secondary: 'bg-[#10B981] hover:bg-[#34D399] text-white', // Green for secondary
-      accent: 'bg-[#FACC15] hover:bg-[#FBBF24] text-[#1F2937]', // Yellow accent
-      ghost: 'bg-transparent hover:bg-[#F3F4F6] text-[#1F2937]', // Ghost button
-      danger: 'bg-[#EF4444] hover:bg-red-600 text-white', // Red for alerts
+      primary: 'bg-primary hover:bg-primary-hover text-white',
+      secondary: 'bg-secondary hover:bg-secondary-light text-white',
+      action: 'bg-action hover:bg-action-light text-white',
+      ghost: 'bg-transparent hover:bg-gray-100 text-gray-700',
+      danger: 'bg-alert hover:bg-red-600 text-white',
+      outline: 'border border-gray-300 bg-white hover:bg-gray-50 text-gray-700',
     }
 
     const sizes = {
@@ -25,18 +27,23 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${variants[variant]} ${sizes[size]} ${className || ''}`}
-        disabled={disabled || isLoading}
+        className={cn(
+          'rounded-lg font-medium transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center justify-center',
+          variants[variant],
+          sizes[size],
+          className
+        )}
+        disabled={isLoading || disabled}
         {...props}
       >
         {isLoading ? (
-          <div className="flex items-center justify-center">
-            <svg className="animate-spin h-5 w-5 mr-2" viewBox="0 0 24 24">
+          <>
+            <svg className="animate-spin h-4 w-4 mr-2" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
             Loading...
-          </div>
+          </>
         ) : children}
       </button>
     )
@@ -46,4 +53,3 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button'
 
 export { Button }
-export default Button
