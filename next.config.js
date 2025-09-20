@@ -3,24 +3,28 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
+    domains: ['therabrake.academy', 'localhost'],
     remotePatterns: [
       {
         protocol: 'https',
         hostname: 'ynizozzfjkocvbycxwvo.supabase.co',
         pathname: '/storage/v1/object/public/**',
       },
-      {
-        protocol: 'https',
-        hostname: '*.vercel.app',
-      },
     ],
   },
-  // Temporary settings to ensure deployment
-  typescript: {
-    ignoreBuildErrors: true,
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
   },
-  eslint: {
-    ignoreDuringBuilds: true,
+  // Suppress hydration warnings in development
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
+  },
+  // Optimize for production
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 }
 
