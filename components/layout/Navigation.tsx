@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 
@@ -16,10 +17,17 @@ export default function Navigation() {
         <div className="flex justify-between h-16">
           {/* Logo and Brand */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              {/* Logo with gradient using brand colors */}
-              <div className="w-10 h-10 bg-gradient-to-br from-[#FACC15] to-[#FBBF24] rounded-lg flex items-center justify-center shadow-sm">
-                <span className="text-[#1F2937] text-2xl">🧠</span>
+            <Link href="/" className="flex items-center space-x-3">
+              {/* TheraBrake Academy Logo */}
+              <div className="relative w-12 h-12">
+                <Image
+                  src="/images/logo/logo.png"
+                  alt="TheraBrake Academy Logo"
+                  width={48}
+                  height={48}
+                  className="object-contain"
+                  priority
+                />
               </div>
               {/* Brand Name */}
               <span className="text-xl font-bold text-white">
