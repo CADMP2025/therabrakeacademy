@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { cn } from '@/lib/utils'
 
@@ -27,6 +29,7 @@ export function Spinner({ size = 'md', color = 'primary', className }: SpinnerPr
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
+      aria-hidden="true"
     >
       <circle
         className="opacity-25"
@@ -45,12 +48,17 @@ export function Spinner({ size = 'md', color = 'primary', className }: SpinnerPr
   )
 }
 
-export function LoadingOverlay({ isLoading, message }: { isLoading: boolean; message?: string }) {
+export interface LoadingOverlayProps {
+  isLoading: boolean
+  message?: string
+}
+
+export function LoadingOverlay({ isLoading, message }: LoadingOverlayProps) {
   if (!isLoading) return null
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 flex flex-col items-center">
+      <div className="bg-white rounded-lg p-6 flex flex-col items-center shadow-xl">
         <Spinner size="lg" />
         {message && <p className="mt-4 text-gray-600">{message}</p>}
       </div>
@@ -58,11 +66,18 @@ export function LoadingOverlay({ isLoading, message }: { isLoading: boolean; mes
   )
 }
 
-export function Skeleton({ width, height, className }: any) {
+export interface SkeletonProps {
+  width?: string | number
+  height?: string | number
+  className?: string
+}
+
+export function Skeleton({ width = '100%', height = 20, className }: SkeletonProps) {
   return (
     <div
       className={cn('bg-gray-200 animate-pulse rounded', className)}
       style={{ width, height }}
+      aria-hidden="true"
     />
   )
 }

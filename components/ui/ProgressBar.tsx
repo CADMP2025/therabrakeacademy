@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { cn } from '@/lib/utils'
 
@@ -33,53 +35,92 @@ export function ProgressBar({
       {(label || showPercentage) && (
         <div className="flex justify-between items-center mb-2">
           {label && <span className="text-sm font-medium text-gray-700">{label}</span>}
-          {showPercentage && <span className="text-sm text-gray-600">{percentage.toFixed(0)}%</span>}
+          {showPercentage && (
+            <span className="text-sm text-gray-600">{percentage.toFixed(0)}%</span>
+          )}
         </div>
       )}
       <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
         <div
           className={cn('h-full rounded-full transition-all duration-300', variants[variant])}
           style={{ width: `${percentage}%` }}
+          role="progressbar"
+          aria-valuenow={value}
+          aria-valuemin={0}
+          aria-valuemax={max}
         />
       </div>
     </div>
   )
 }
 
-export function CourseProgress({ modules, showDetails = false }: any) {
-  const totalLessons = modules.reduce((acc: number, m: any) => acc + m.lessons.length, 0)
-  const completedLessons = modules.reduce((acc: number, m: any) => 
-    acc + m.lessons.filter((l: any) => l.completed).length, 0
+interface Module {
+  id: string
+  title: string
+  completed?: boolean
+  lessons: {
+    id: string
+    title: string
+    completed: boolean
+  }[]
+}
+
+export interface CourseProgressProps {
+  modules: Module[]
+  showDetails?: boolean
+}
+
+export function CourseProgress({ modules, showDetails = false }: CourseProgressProps) {
+  const totalLessons = modules.reduce((acc, m) => acc + m.lessons.length, 0)
+  const completedLessons = modules.reduce(
+    (acc, m) => acc + m.lessons.filter(l => l.completed).length, 
+    0
   )
-  const percentage = (completedLessons / totalLessons) * 100
+  const percentage = totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0
 
   return (
     <div className="space-y-4">
       <ProgressBar value={percentage} label="Overall Progress" />
       {showDetails && (
         <div className="space-y-2">
-          {modules.map((module: any) => (
-            <div key={module.id} className="text-sm">
-              <span className="font-medium">{module.title}</span>
-              <span className="text-gray-500 ml-2">
-                {module.lessons.filter((l: any) => l.completed).length}/{module.lessons.length} lessons
-              </span>
-            </div>
-          ))}
+          {modules.map((module) => {
+            const moduleCompleted = module.lessons.filter(l => l.completed).length
+            const moduleTotal = module.lessons.length
+            return (
+              <div key={module.id} className="text-sm">
+                <span className="font-medium">{module.title}</span>
+                <span className="text-gray-500 ml-2">
+                  {moduleCompleted}/{moduleTotal} lessons
+                </span>
+              </div>
+            )
+          })}
         </div>
       )}
     </div>
   )
 }
 
-export function StepProgress({ steps, currentStep, variant = 'linear' }: any) {
+interface Step {
+  id: string
+  title: string
+  description?: string
+}
+
+export interface StepProgressProps {
+  steps: Step[]
+  currentStep: number
+  variant?: 'linear' | 'circular'
+}
+
+export function StepProgress({ steps, currentStep, variant = 'linear' }: StepProgressProps) {
   return (
     <div className="space-y-4">
-      {steps.map((step: any, index: number) => (
+      {steps.map((step, index) => (
         <div key={step.id} className="flex items-center">
           <div
             className={cn(
-              'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium',
+              'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all',
               index < currentStep
                 ? 'bg-primary text-white'
                 : index === currentStep
@@ -87,7 +128,17 @@ export function StepProgress({ steps, currentStep, variant = 'linear' }: any) {
                 : 'bg-gray-200 text-gray-500'
             )}
           >
-            {index + 1}
+            {index < currentStep ? (
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            ) : (
+              index + 1
+            )}
           </div>
           <div className="ml-3">
             <p className="text-sm font-medium">{step.title}</p>
