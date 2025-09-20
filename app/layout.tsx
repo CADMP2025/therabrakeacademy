@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
+import { AuthProvider } from '@/contexts/AuthContext'
 import { Navigation } from '@/components/layout/Navigation'
 import './globals.css'
 
@@ -29,8 +30,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className={inter.className}>
-        <Navigation />
-        <main>{children}</main>
+        <AuthProvider>
+          <Navigation />
+          <main>{children}</main>
+        </AuthProvider>
       </body>
     </html>
   )
